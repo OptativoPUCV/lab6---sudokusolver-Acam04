@@ -130,9 +130,9 @@ int is_final(Node* n){
    return 1;
 }
 
-Node* DFS(Node* initial, int* cont){
+Node* DFS(Node* inicio, int* cont){
    List* stack = createList(); 
-   pushFront(stack, initial); 
+   pushFront(stack, inicio); 
 
    while (!is_empty(stack)) { 
       (*cont)++; 
