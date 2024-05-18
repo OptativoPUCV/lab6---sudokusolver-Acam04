@@ -90,7 +90,7 @@ int is_valid(Node* n){
    return 1;
 }
 List* get_adj_nodes(Node* n){
-   List* list=createList();
+   List* lista=createList();
 
    int row = -1, col = -1;
 
@@ -105,18 +105,18 @@ List* get_adj_nodes(Node* n){
       if (row != -1) break;
     }
 
-    if (row == -1) return list;
+    if (row == -1) return lista;
 
-   for (int num = 1; num <= 9; num++) {
+   for (int dato = 1; dato <= 9; dato++) {
       Node* newNode = copy(n);
-      newNode->sudo[row][col] = num;
+      newNode->sudo[row][col] = dato;
       if (is_valid(newNode)) {
-         pushBack(list, newNode);
+         pushBack(lista, newNode);
       } else {
          free(newNode);
       }
    }
-   return list;
+   return lista;
 }
 
 
@@ -131,7 +131,30 @@ int is_final(Node* n){
 }
 
 Node* DFS(Node* initial, int* cont){
-  return NULL;
+   List* stack = createList(); 
+   pushFront(stack, initial); 
+
+   while (!is_empty(stack)) { 
+      (*cont)++; 
+      Node* current = front(stack); 
+      popFront(stack); 
+      if (is_final(current)) { 
+         clean(stack); 
+         return current; 
+      }
+
+      List* adj_nodes = get_adj_nodes(current); 
+      Node* adj_node = front(adj_nodes); 
+
+      while (adj_node != NULL) { 
+         pushFront(stack, adj_node); 
+         adj_node = next(adj_nodes); 
+      }
+
+      clean(adj_nodes); 
+      free(current); 
+   }
+   return NULL;
 }
 
 
